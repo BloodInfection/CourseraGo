@@ -17,7 +17,7 @@ import (
 func main() {
 
 	out := os.Stdout
-	path := os.Args[1]
+	path := os.Args[1] /* путь = второму аргументу(например точка это путь к текущему файлу) */
 	/* будем печатать файлы или нет */
 
 	if !(len(os.Args) == 2 || len(os.Args) == 3) {
@@ -35,7 +35,7 @@ func dirTree(out io.Writer, path string, printFiles bool) (err error) {
 	var MassiveOfFiles []string              // заносим названия ФАЙЛОВ в директории
 	var MassiveOfDirs []string               /* заносим названия ПАПОК в директории */
 	DirsAndFiles, err := ioutil.ReadDir(".") /* пояснение внизу */
-	if err != nil {
+	if err != nil {                          /* какая то ошибка при чтении директории */
 		log.Fatal(err)
 	}
 
