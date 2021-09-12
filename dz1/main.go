@@ -14,6 +14,10 @@ import (
 	fmt.Println("nothing here yet")
 }*/
 
+func test() string {
+	return "massive"
+}
+
 func main() {
 
 	out := os.Stdout
@@ -25,16 +29,36 @@ func main() {
 	}
 	printFiles := len(os.Args) == 3 && os.Args[2] == "-f" /*true or false */
 	fmt.Println(path, printFiles, out)
-	dirTree(out, path, printFiles)
+
+	_, massive := dirTree(out, path, printFiles)
+	printing(massive)
+	var str string
+	sliceForGraffiti := [5]bool{false, true, false, false, true}
+	for i := 0; i < len(sliceForGraffiti); i++ {
+		if sliceForGraffiti[i] == false {
+			str += "|\t"
+		} else {
+			str += "\t"
+		}
+
+	}
+	fmt.Println(str)
+
 }
 
-func dirTree(out io.Writer, path string, printFiles bool) (err error) {
+func printing(MassiveOfDirs []string) {
+	for i, b := range MassiveOfDirs {
+		fmt.Println(i, b)
+	}
+}
+
+func dirTree(out io.Writer, path string, printFiles bool) (err error, MassiveOfDirs []string) {
 	/* ShowFiles := flag.Bool("f", false, "shows files")
 	flag.Parse()  флаг для вывода не только папок, но и их содержимого  */
 
-	var MassiveOfFiles []string              // заносим названия ФАЙЛОВ в директории
-	var MassiveOfDirs []string               /* заносим названия ПАПОК в директории */
-	DirsAndFiles, err := ioutil.ReadDir(".") /* пояснение внизу */
+	var MassiveOfFiles []string // заносим названия ФАЙЛОВ в директории
+	/* var MassiveOfDirs []string   */        /* заносим названия ПАПОК в директории */
+	DirsAndFiles, err := ioutil.ReadDir(path) /* пояснение внизу */
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -51,7 +75,8 @@ func dirTree(out io.Writer, path string, printFiles bool) (err error) {
 	sort.Strings(MassiveOfFiles)
 	fmt.Println(MassiveOfFiles)
 	fmt.Println(MassiveOfDirs)
-	return nil
+
+	return nil, MassiveOfDirs
 }
 
 /*Результаты ( список папок-файлов ) должны быть отсортированы по алфавиту.
